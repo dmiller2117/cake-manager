@@ -18,9 +18,9 @@ public class CakeEntity implements Serializable {
   @Column(name = "title", unique = true, nullable = false, length = 100)
   private String title;
 
-  @Column(name = "desc", unique = false, nullable = false, length = 100)
+  @Column(name = "desc", nullable = false, length = 100)
   private String description;
 
-  @Column(name = "image", unique = false, nullable = false, length = 300)
+  @Column(name = "image", nullable = false, length = 300)
   private String image;
 }

@@ -1,15 +1,15 @@
 package com.waracle.cakemgr.controller;
 
-import com.waracle.cakemgr.entity.CakeEntity;
+import com.waracle.cakemgr.model.Cake;
 import com.waracle.cakemgr.service.CakeService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-@RestController
+@RestController()
+@RequestMapping(value = "/cakes", produces = MediaType.APPLICATION_JSON_VALUE)
 public class CakeController {
 
   private final CakeService cakeService;
@@ -19,8 +19,23 @@ public class CakeController {
     this.cakeService = cakeService;
   }
 
-  @GetMapping(value = "/cakes", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<List<CakeEntity>> getCakes() {
+  @GetMapping
+  public ResponseEntity<List<Cake>> getCakes() {
     return ResponseEntity.ok(cakeService.getCakes());
+  }
+
+  @PostMapping
+  public ResponseEntity<Cake> addCake(Cake cake) {
+    return ResponseEntity.ok(cakeService.addCake(cake));
+  }
+
+  @PutMapping
+  public ResponseEntity<Cake> updateCake(Cake cake) {
+    return ResponseEntity.ok(cakeService.updateCake(cake));
+  }
+
+  @DeleteMapping
+  public void deleteCake(Long id) {
+    cakeService.deleteCake(id);
   }
 }
