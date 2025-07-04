@@ -20,11 +20,9 @@ Cake Manager Micro Service (fictitious)
 
     cUrl examples:
 
-    '''
     curl --location 'http://localhost:8080/cakes' \
     --header 'Authorization: Basic dXNlcjpwYXNzd29yZA=='
-    '''
-    '''
+
     curl --location 'http://localhost:8080/cakes' \
     --header 'Content-Type: application/json' \
     --header 'Authorization: Basic dXNlcjpwYXNzd29yZA==' \
@@ -33,7 +31,7 @@ Cake Manager Micro Service (fictitious)
             "description": "A cute caterpillar cake",
             "image": "caterpillar_cake.jpg"
         }'
-    '''
+
     curl --location --request PUT 'http://localhost:8080/cakes' \
     --header 'Content-Type: application/json' \
     --header 'Authorization: Basic dXNlcjpwYXNzd29yZA==' \
@@ -43,11 +41,10 @@ Cake Manager Micro Service (fictitious)
         "description": "An updated cute caterpillar cake",
         "image": "caterpillar_cake.jpg"
     }'
-    '''
-    '''
+
     curl --location --request DELETE 'http://localhost:8080/cakes/6' \
     --header 'Authorization: Basic dXNlcjpwYXNzd29yZA=='
-    '''
+
 
     Further enhancements:
 
