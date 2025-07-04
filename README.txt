@@ -1,6 +1,65 @@
 Cake Manager Micro Service (fictitious)
 =======================================
 
+    Updates by David Miller
+
+    Changes:
+
+        * Have refactored to use SpringBoot
+        * Added endpoints for:
+            ** GET http://localhost:8080/cakes
+            ** POST http://localhost:8080/cakes
+            ** PUT http://localhost:8080/cakes
+            ** DELETE http://localhost:8080/cakes/{cakeId}
+        * Added code coverage with Jacoco, see report on build in target/site/jacoco/index.html
+        * Added basic auth, user=user password=password
+        * Unit tested
+
+    How to run:
+         `mvn spring-boot:run`
+
+    cUrl examples:
+
+    '''
+    curl --location 'http://localhost:8080/cakes' \
+    --header 'Authorization: Basic dXNlcjpwYXNzd29yZA=='
+    '''
+    '''
+    curl --location 'http://localhost:8080/cakes' \
+    --header 'Content-Type: application/json' \
+    --header 'Authorization: Basic dXNlcjpwYXNzd29yZA==' \
+    --data '{
+            "title": "Caterpillar Cake",
+            "description": "A cute caterpillar cake",
+            "image": "caterpillar_cake.jpg"
+        }'
+    '''
+    curl --location --request PUT 'http://localhost:8080/cakes' \
+    --header 'Content-Type: application/json' \
+    --header 'Authorization: Basic dXNlcjpwYXNzd29yZA==' \
+    --data '{
+        "cakeId": 6,
+        "title": "Caterpillar Cake",
+        "description": "An updated cute caterpillar cake",
+        "image": "caterpillar_cake.jpg"
+    }'
+    '''
+    '''
+    curl --location --request DELETE 'http://localhost:8080/cakes/6' \
+    --header 'Authorization: Basic dXNlcjpwYXNzd29yZA=='
+    '''
+
+    Further enhancements:
+
+    * Use mutation coverage for test, use a framework like Pitest(https://pitest.org/)
+    * Use an API testing framework such as Karate(https://www.karatelabs.io/), build upon Cucumber for BDD style testing
+    * Use Springs' @RestControllerAdvice for exception handling.
+    * Add CI/CD pipeline
+    * Add Containerisation
+
+
+=======================================
+
 A summer intern started on this project but never managed to get it finished.
 The developer assured us that some of the above is complete, but at the moment accessing the /cakes endpoint
 returns a 404, so getting this working should be the first priority.
