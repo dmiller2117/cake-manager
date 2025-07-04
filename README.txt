@@ -13,6 +13,7 @@ Cake Manager Micro Service (fictitious)
             ** DELETE http://localhost:8080/cakes/{cakeId}
         * Added code coverage with Jacoco, see report on build in target/site/jacoco/index.html
         * Added basic auth, user=user password=password
+        * Loads Cakes on start up to h2 DB
         * Unit tested
 
     How to run:

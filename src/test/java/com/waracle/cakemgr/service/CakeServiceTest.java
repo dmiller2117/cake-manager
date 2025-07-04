@@ -1,7 +1,10 @@
 package com.waracle.cakemgr.service;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import com.waracle.cakemgr.entity.CakeEntity;
 import com.waracle.cakemgr.mapper.CakeMapper;
@@ -11,6 +14,9 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullSource;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mapstruct.factory.Mappers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -33,8 +39,8 @@ class CakeServiceTest {
 
     List<Cake> cakes = cakeService.getCakes();
 
-    assertEquals(1, cakes.size());
-    assertEquals("Cake", cakes.get(0).getTitle());
+    assertThat(cakes).hasSize(1);
+    assertThat(cakes).extracting(Cake::getTitle).contains("Cake");
     verify(cakeRepository).findAll();
   }
 
@@ -49,22 +55,21 @@ class CakeServiceTest {
 
     Cake result = cakeService.addCake(cake);
 
-    assertNotNull(result.getCakeId());
-    assertEquals("New Cake", result.getTitle());
+    assertThat(result.getCakeId()).isNotNull();
+    assertThat(result.getTitle()).isEqualTo("New Cake");
     verify(cakeRepository).save(any(CakeEntity.class));
   }
 
-  @Test
+  @ParameterizedTest
+  @ValueSource(longs = {99, -1})
+  @NullSource
   @DisplayName("updateCake throws if ID is null or not found")
-  void updateCake_throwsIfIdInvalid() {
-    Cake cakeWithoutId = new Cake(null, "Cake", "desc", "img");
+  void updateCake_throwsIfIdInvalid(Long cakeId) {
+    Cake cakeWithoutId = new Cake(cakeId, "Cake", "desc", "img");
 
-    assertThrows(ResponseStatusException.class, () -> cakeService.updateCake(cakeWithoutId));
-
-    when(cakeRepository.existsById(99L)).thenReturn(false);
-    Cake cakeWithInvalidId = new Cake(99L, "Cake", "desc", "img");
-
-    assertThrows(ResponseStatusException.class, () -> cakeService.updateCake(cakeWithInvalidId));
+    assertThatThrownBy(() -> cakeService.updateCake(cakeWithoutId))
+        .isInstanceOf(ResponseStatusException.class)
+        .hasMessage("404 NOT_FOUND \"Cake Id not found\"");
   }
 
   @Test
@@ -82,7 +87,7 @@ class CakeServiceTest {
 
     Cake result = cakeService.updateCake(cake);
 
-    assertEquals("Updated Cake", result.getTitle());
+    assertThat(result.getTitle()).isEqualTo("Updated Cake");
     verify(cakeRepository).save(any(CakeEntity.class));
   }
 
@@ -91,7 +96,9 @@ class CakeServiceTest {
   void deleteCake_throwsIfNotFound() {
     when(cakeRepository.existsById(1L)).thenReturn(false);
 
-    assertThrows(ResponseStatusException.class, () -> cakeService.deleteCake(1L));
+    assertThatThrownBy(() -> cakeService.deleteCake(1L))
+        .isInstanceOf(ResponseStatusException.class)
+        .hasMessage("404 NOT_FOUND \"Cake Id not found\"");
   }
 
   @Test
