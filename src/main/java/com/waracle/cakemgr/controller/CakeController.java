@@ -25,17 +25,18 @@ public class CakeController {
   }
 
   @PostMapping
-  public ResponseEntity<Cake> addCake(Cake cake) {
+  public ResponseEntity<Cake> addCake(@RequestBody Cake cake) {
     return ResponseEntity.ok(cakeService.addCake(cake));
   }
 
   @PutMapping
-  public ResponseEntity<Cake> updateCake(Cake cake) {
+  public ResponseEntity<Cake> updateCake(@RequestBody Cake cake) {
     return ResponseEntity.ok(cakeService.updateCake(cake));
   }
 
-  @DeleteMapping
-  public void deleteCake(Long id) {
-    cakeService.deleteCake(id);
+  @DeleteMapping(value = "/{cakeId}")
+  public ResponseEntity deleteCake(@PathVariable Long cakeId) {
+    cakeService.deleteCake(cakeId);
+    return ResponseEntity.noContent().build();
   }
 }
