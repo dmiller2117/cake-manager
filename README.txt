@@ -5,7 +5,7 @@ Cake Manager Micro Service (fictitious)
 
     Changes:
 
-        * Have refactored to use SpringBoot
+        * Have refactored to use SpringBoot and Java 17
         * Added endpoints for:
             ** GET http://localhost:8080/cakes
             ** POST http://localhost:8080/cakes
