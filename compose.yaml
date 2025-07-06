@@ -1,0 +1,7 @@
+services:
+  spring-app:
+    build: .
+    container_name: 'cake-manager'
+    restart: always
+    ports:
+      - '8080:8080'
