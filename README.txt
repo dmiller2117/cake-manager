@@ -11,13 +11,20 @@ Cake Manager Micro Service (fictitious)
             ** POST http://localhost:8080/cakes
             ** PUT http://localhost:8080/cakes
             ** DELETE http://localhost:8080/cakes/{cakeId}
-        * Added code coverage with Jacoco, see report on build in target/site/jacoco/index.html
         * Added basic auth, user=user password=password
         * Loads Cakes on start up to h2 DB
         * Unit tested
+        * Added code coverage with Jacoco, see report on build in target/site/jacoco/index.html
 
-    How to run:
+    How to run with Maven:
          `mvn spring-boot:run`
+
+    How to run with Docker:
+        `docker compose up`
+
+    and access the following URL:
+
+    `http://localhost:8080/`
 
     cUrl examples:
 
@@ -51,9 +58,8 @@ Cake Manager Micro Service (fictitious)
 
     * Use mutation coverage for test, use a framework like Pitest(https://pitest.org/)
     * Use an API testing framework such as Karate(https://www.karatelabs.io/), build upon Cucumber for BDD style testing
-    * Use Springs' @RestControllerAdvice for exception handling.
+    * Use Spring @RestControllerAdvice for exception handling.
     * Add CI/CD pipeline
-    * Add Containerisation
 
 
 =======================================
